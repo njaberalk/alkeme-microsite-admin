@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #25475e;
+  --color-brand-light: #2d5a78;
+  --color-brand-dark: #1a3347;
+  --color-gold: #ffbf3b;
+  --color-gold-hover: #f0b42e;
+  --color-stone: #f4f4ec;
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+  --color-sidebar: #1a2332;
+  --color-sidebar-hover: #243044;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
