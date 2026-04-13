@@ -15,8 +15,16 @@ export default function ContentEditPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [dirty, setDirty] = useState(false);
 
   const typeConfig = contentTypes[type];
+
+  // Warn before leaving with unsaved changes
+  useEffect(() => {
+    const handler = (e) => { if (dirty) { e.preventDefault(); e.returnValue = ''; } };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [dirty]);
 
   useEffect(() => {
     fetch(`/api/content/${site}/${type}/${slug}`)
@@ -43,6 +51,7 @@ export default function ContentEditPage() {
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setSha(data.sha);
+      setDirty(false);
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
     } catch (e) {
@@ -93,6 +102,7 @@ export default function ContentEditPage() {
           type={type}
           onSave={handleSave}
           saving={saving}
+          onDirty={() => setDirty(true)}
         />
       )}
     </div>

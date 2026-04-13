@@ -36,6 +36,11 @@ export default function Sidebar({ siteId }) {
       icon: 'M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01',
       items: [{ href: `/${siteId}/theme`, label: 'Theme Editor' }],
     },
+    {
+      title: 'AI Tools',
+      icon: 'M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10',
+      items: [{ href: `/generate/${siteId}`, label: 'Content Generator' }],
+    },
   ];
 
   return (
@@ -118,7 +123,7 @@ export default function Sidebar({ siteId }) {
                 href={item.href}
                 className={clsx(
                   'block px-4 py-1.5 pl-10 text-sm transition-colors',
-                  pathname.startsWith(item.href)
+                  (pathname === item.href || pathname.startsWith(item.href + '/'))
                     ? 'bg-white/10 text-white'
                     : 'text-white/50 hover:text-white hover:bg-sidebar-hover'
                 )}

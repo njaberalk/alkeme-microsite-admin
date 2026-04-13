@@ -4,11 +4,12 @@ import { useState } from 'react';
 import SectionEditor from './SectionEditor';
 import FaqEditor from './FaqEditor';
 
-export default function ContentForm({ item, type, onSave, saving }) {
+export default function ContentForm({ item, type, onSave, saving, onDirty }) {
   const [formData, setFormData] = useState({ ...item });
 
   function update(field, value) {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    if (onDirty) onDirty();
   }
 
   function handleSubmit(e) {
@@ -115,6 +116,18 @@ export default function ContentForm({ item, type, onSave, saving }) {
           <TagEditor
             tags={formData.relatedCoverages}
             onChange={(tags) => update('relatedCoverages', tags)}
+            placeholder="Add coverage slug..."
+          />
+        </div>
+      )}
+
+      {/* Recommended Coverages */}
+      {formData.recommendedCoverages && (
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <h2 className="font-semibold text-gray-900 mb-4">Recommended Coverages</h2>
+          <TagEditor
+            tags={formData.recommendedCoverages}
+            onChange={(tags) => update('recommendedCoverages', tags)}
             placeholder="Add coverage slug..."
           />
         </div>

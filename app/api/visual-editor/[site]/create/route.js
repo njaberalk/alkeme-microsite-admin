@@ -68,6 +68,20 @@ export async function POST(request, { params }) {
       ],
     };
 
+    // Add state/city-specific fields
+    if (type.includes('states')) {
+      newItem.name = title;
+      delete newItem.title;
+      newItem.abbreviation = body.abbreviation || '';
+    }
+    if (type.includes('cities')) {
+      newItem.city = title;
+      newItem.state = body.state || '';
+      newItem.abbreviation = body.abbreviation || '';
+      newItem.stateSlug = (body.state || '').toLowerCase().replace(/\s+/g, '-');
+      delete newItem.title;
+    }
+
     // Trim meta description if too long
     if (newItem.metaDescription.length > 160) {
       newItem.metaDescription = newItem.metaDescription.slice(0, 157) + '...';

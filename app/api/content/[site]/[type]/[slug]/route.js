@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { sites, contentTypes } from '@/lib/sites.config';
 import { readFile, writeFile } from '@/lib/github';
 import { parseDataFile, serializeDataFile } from '@/lib/parser';
+import { getSchemaForType } from '@/lib/schemas/content';
 
 export async function GET(request, { params }) {
   try {
@@ -45,6 +46,16 @@ export async function PUT(request, { params }) {
 
     if (!siteConfig || !typeConfig) {
       return NextResponse.json({ error: 'Invalid site or type' }, { status: 404 });
+    }
+
+    // Validate against Zod schema if available
+    const schema = getSchemaForType(type);
+    if (schema) {
+      const validation = schema.safeParse(updatedItem);
+      if (!validation.success) {
+        const errors = validation.error.errors.map((e) => `${e.path.join('.')}: ${e.message}`);
+        return NextResponse.json({ error: `Validation failed: ${errors.join(', ')}` }, { status: 400 });
+      }
     }
 
     // Re-read current file to get latest data
