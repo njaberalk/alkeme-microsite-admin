@@ -20,8 +20,38 @@ export default function Dashboard() {
         <p className="text-white/70 mt-1">Manage content across all insurance verticals</p>
       </header>
 
-      {/* Site Grid */}
+      {/* Quick links */}
       <main className="max-w-6xl mx-auto px-8 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+          <Link href="/keywords" className="flex items-center gap-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl p-5 hover:from-purple-700 hover:to-purple-800 transition-all">
+            <svg className="w-7 h-7 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5" />
+            </svg>
+            <div>
+              <div className="font-bold">Keyword Strategy</div>
+              <div className="text-white/70 text-xs">Upload CSVs, track coverage, auto-generate</div>
+            </div>
+          </Link>
+          <Link href="/generate" className="flex items-center gap-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl p-5 hover:from-blue-700 hover:to-blue-800 transition-all">
+            <svg className="w-7 h-7 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+            </svg>
+            <div>
+              <div className="font-bold">AI Content Generator</div>
+              <div className="text-white/70 text-xs">Generate blog posts with Claude AI</div>
+            </div>
+          </Link>
+          <Link href="/keywords" className="flex items-center gap-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white rounded-xl p-5 hover:from-amber-700 hover:to-amber-800 transition-all">
+            <svg className="w-7 h-7 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+            </svg>
+            <div>
+              <div className="font-bold">Bulk Generate (7 Sites)</div>
+              <div className="text-white/70 text-xs">Schedule: 1st & 15th — 14 articles/month</div>
+            </div>
+          </Link>
+        </div>
+
         <h2 className="text-lg font-semibold text-gray-700 mb-6">Select a site to manage</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Object.values(sites).map((site) => (

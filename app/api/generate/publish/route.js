@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { readFile, writeFile } from '@/lib/github';
 import { parseDataFile, serializeDataFile } from '@/lib/parser';
 import { getSite } from '@/lib/sites.config';
+import { getKeywords, saveKeywords } from '@/lib/keywords';
 
 export async function POST(request) {
   try {
@@ -46,6 +47,23 @@ export async function POST(request) {
       `Add blog post: ${post.title} (via CMS Content Generator)`,
       branch
     );
+
+    // Update keyword status to "published"
+    try {
+      const keywords = getKeywords(siteId);
+      if (keywords.length > 0) {
+        const title = (post.title || '').toLowerCase();
+        const slug = (post.slug || '').toLowerCase();
+        const updated = keywords.map((k) => {
+          const kw = k.keyword.toLowerCase();
+          if (title.includes(kw) || slug.includes(kw.replace(/\s+/g, '-')) || k.assignedSlug === post.slug) {
+            return { ...k, status: 'published', assignedSlug: post.slug, publishedDate: new Date().toISOString().split('T')[0] };
+          }
+          return k;
+        });
+        saveKeywords(siteId, updated);
+      }
+    } catch { /* keyword tracking is non-critical */ }
 
     return NextResponse.json({
       success: true,
