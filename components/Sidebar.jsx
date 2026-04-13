@@ -86,6 +86,22 @@ export default function Sidebar({ siteId }) {
           Visual Editor
         </Link>
 
+        {/* Page Builder link */}
+        <Link
+          href={`/${siteId}/builder`}
+          className={clsx(
+            'flex items-center gap-3 px-4 py-2 text-sm transition-colors',
+            pathname === `/${siteId}/builder`
+              ? 'bg-emerald-600/30 text-emerald-300'
+              : 'text-emerald-400/70 hover:text-emerald-300 hover:bg-emerald-600/20'
+          )}
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l5.653-4.655m5.254-4.218a5.14 5.14 0 00-7.071 7.071l.707.707L15.17 8.172l-.707-.707z" />
+          </svg>
+          Page Builder
+        </Link>
+
         {navGroups.map((group) => (
           <div key={group.title} className="mt-6">
             <div className="flex items-center gap-2 px-4 mb-2">

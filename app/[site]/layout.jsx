@@ -6,10 +6,10 @@ import Sidebar from '@/components/Sidebar';
 
 export default function SiteLayout({ children, params }) {
   const pathname = usePathname();
-  const isVisualEditor = pathname.endsWith('/visual-editor');
+  const isFullScreen = pathname.endsWith('/visual-editor') || pathname.endsWith('/builder');
 
-  // Visual editor gets full screen — no sidebar
-  if (isVisualEditor) {
+  // Visual editor and builder get full screen — no sidebar
+  if (isFullScreen) {
     return <>{children}</>;
   }
 
