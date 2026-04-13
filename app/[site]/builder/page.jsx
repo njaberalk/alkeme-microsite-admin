@@ -5,8 +5,8 @@ import { useParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { sites } from '@/lib/sites.config';
+import PagesSidebar from '@/components/visual-editor/PagesSidebar';
 
-// Dynamic import — GrapeJS needs browser APIs, can't SSR
 const GrapeEditor = dynamic(() => import('@/components/builder/GrapeEditor'), {
   ssr: false,
   loading: () => (
@@ -28,6 +28,8 @@ export default function BuilderPage() {
   const [currentPath, setCurrentPath] = useState('');
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [showPages, setShowPages] = useState(true);
+  const [editorKey, setEditorKey] = useState(0);
 
   const handleSave = useCallback(async ({ html, css, path }) => {
     setSaving(true);
@@ -51,17 +53,34 @@ export default function BuilderPage() {
     }
   }, [site]);
 
+  function handleNavigate(path) {
+    setCurrentPath(path);
+    setEditorKey((k) => k + 1); // Force re-mount GrapeJS with new content
+  }
+
   return (
     <div className="flex flex-col h-screen">
       {/* Top bar */}
       <div className="bg-gray-900 text-white px-4 py-2 flex items-center justify-between shrink-0 z-10">
         <div className="flex items-center gap-3">
           <Link href={`/${site}`} className="text-white/50 hover:text-white text-sm">
-            &larr; Back
+            &larr;
           </Link>
+          <button
+            onClick={() => setShowPages(!showPages)}
+            className={`p-1 rounded transition-colors ${showPages ? 'bg-white/15 text-white' : 'text-white/40 hover:text-white'}`}
+            title="Toggle pages panel"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          </button>
           <div className="w-px h-4 bg-white/20" />
           <span className="text-sm font-semibold">{config?.name}</span>
           <span className="text-xs text-white/40">Page Builder</span>
+          {currentPath && (
+            <span className="text-xs text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded">{currentPath || '/'}</span>
+          )}
         </div>
         <div className="flex items-center gap-3">
           {saved && <span className="text-xs text-green-400">Published!</span>}
@@ -75,26 +94,36 @@ export default function BuilderPage() {
             View Live
           </button>
           <button
-            onClick={async () => {
-              // Trigger save through GrapeJS command
-              // The editor instance handles this
-            }}
             disabled={saving}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-xs font-medium transition-colors disabled:opacity-50"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-lg text-xs font-medium transition-colors disabled:opacity-50"
           >
             {saving ? 'Publishing...' : 'Publish'}
           </button>
         </div>
       </div>
 
-      {/* GrapeJS Editor — takes full remaining space */}
-      <div className="flex-1 overflow-hidden">
-        <GrapeEditor
-          site={site}
-          currentPath={currentPath}
-          onSave={handleSave}
-          siteConfig={config}
-        />
+      {/* Main: Pages sidebar + GrapeJS */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Pages sidebar (collapsible) */}
+        {showPages && (
+          <PagesSidebar
+            site={site}
+            currentPath={currentPath}
+            onNavigate={handleNavigate}
+            onCreatePage={() => {}}
+          />
+        )}
+
+        {/* GrapeJS canvas */}
+        <div className="flex-1 overflow-hidden">
+          <GrapeEditor
+            key={editorKey}
+            site={site}
+            currentPath={currentPath}
+            onSave={handleSave}
+            siteConfig={config}
+          />
+        </div>
       </div>
     </div>
   );

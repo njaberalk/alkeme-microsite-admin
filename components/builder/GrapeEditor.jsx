@@ -146,37 +146,7 @@ export default function GrapeEditor({ site, currentPath, onSave, siteConfig }) {
             },
           ],
         },
-        panels: {
-          defaults: [
-            {
-              id: 'panel-top',
-              el: '.panel-top',
-            },
-            {
-              id: 'basic-actions',
-              el: '.panel-actions',
-              buttons: [
-                { id: 'visibility', active: true, className: 'btn-toggle-borders', label: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg>', command: 'sw-visibility', context: 'sw-visibility' },
-                { id: 'fullscreen', className: 'btn-fullscreen', label: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>', command: 'fullscreen', context: 'fullscreen' },
-                { id: 'preview', className: 'btn-preview', label: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>', command: 'preview' },
-                { id: 'undo', className: 'btn-undo', label: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14L4 9l5-5"/><path d="M4 9h12a4 4 0 010 8H11"/></svg>', command: 'core:undo' },
-                { id: 'redo', className: 'btn-redo', label: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 14l5-5-5-5"/><path d="M20 9H8a4 4 0 000 8h5"/></svg>', command: 'core:redo' },
-              ],
-            },
-            {
-              id: 'devices',
-              el: '.panel-devices',
-              buttons: [
-                { id: 'desktop', label: 'Desktop', command: 'set-device-desktop', active: true, togglable: false },
-                { id: 'tablet', label: 'Tablet', command: 'set-device-tablet', togglable: false },
-                { id: 'mobile', label: 'Mobile', command: 'set-device-mobile', togglable: false },
-              ],
-            },
-          ],
-        },
       }}
-    >
-      {/* GrapeJS renders its own UI */}
-    </GjsEditor>
+    />
   );
 }

@@ -23,7 +23,21 @@ export default function ContentForm({ item, type, onSave, saving }) {
         <h2 className="font-semibold text-gray-900 mb-4">Basic Info</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Field label="Slug" value={formData.slug} onChange={(v) => update('slug', v)} mono />
-          <Field label="Title" value={formData.title} onChange={(v) => update('title', v)} />
+          {formData.title !== undefined && (
+            <Field label="Title" value={formData.title} onChange={(v) => update('title', v)} />
+          )}
+          {formData.name !== undefined && (
+            <Field label="Name" value={formData.name} onChange={(v) => update('name', v)} />
+          )}
+          {formData.city !== undefined && (
+            <Field label="City" value={formData.city} onChange={(v) => update('city', v)} />
+          )}
+          {formData.state !== undefined && (
+            <Field label="State" value={formData.state} onChange={(v) => update('state', v)} />
+          )}
+          {formData.abbreviation !== undefined && (
+            <Field label="Abbreviation" value={formData.abbreviation} onChange={(v) => update('abbreviation', v)} />
+          )}
         </div>
       </div>
 
