@@ -50,7 +50,7 @@ export async function POST(request) {
 
     // Update keyword status to "published"
     try {
-      const keywords = getKeywords(siteId);
+      const keywords = await getKeywords(siteId);
       if (keywords.length > 0) {
         const title = (post.title || '').toLowerCase();
         const slug = (post.slug || '').toLowerCase();
@@ -61,7 +61,7 @@ export async function POST(request) {
           }
           return k;
         });
-        saveKeywords(siteId, updated);
+        await saveKeywords(siteId, updated);
       }
     } catch { /* keyword tracking is non-critical */ }
 
