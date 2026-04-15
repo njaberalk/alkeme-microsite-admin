@@ -72,16 +72,18 @@ export default function ContentForm({ item, type, onSave, saving, onDirty }) {
       </div>
 
       {/* Overview */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h2 className="font-semibold text-gray-900 mb-4">Overview</h2>
-        <Field
-          label="Overview Text"
-          value={formData.overview}
-          onChange={(v) => update('overview', v)}
-          textarea
-          rows={6}
-        />
-      </div>
+      {formData.overview !== undefined && (
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <h2 className="font-semibold text-gray-900 mb-4">Overview</h2>
+          <Field
+            label="Overview Text"
+            value={formData.overview}
+            onChange={(v) => update('overview', v)}
+            textarea
+            rows={6}
+          />
+        </div>
+      )}
 
       {/* Sections */}
       {formData.sections && (

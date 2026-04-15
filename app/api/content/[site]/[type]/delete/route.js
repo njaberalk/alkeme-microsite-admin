@@ -14,7 +14,8 @@ export async function POST(request, { params }) {
     if (!siteConfig || !typeConfig) return NextResponse.json({ error: 'Invalid site or type' }, { status: 404 });
     if (!slug) return NextResponse.json({ error: 'slug required' }, { status: 400 });
 
-    const { content, sha } = await readFile(siteConfig.repo, typeConfig.file);
+    const branch = siteConfig.branch || 'master';
+    const { content, sha } = await readFile(siteConfig.repo, typeConfig.file, branch);
     const parsed = parseDataFile(content);
     const items = Array.isArray(parsed.data) ? parsed.data : [];
 
@@ -26,7 +27,7 @@ export async function POST(request, { params }) {
 
     const result = await writeFile(
       siteConfig.repo, typeConfig.file, newContent, sha,
-      `CMS: Delete ${type}/${slug}`,
+      `CMS: Delete ${type}/${slug}`, branch,
     );
 
     return NextResponse.json({ success: true, deleted: removed.title || removed.name || slug, sha: result.sha });

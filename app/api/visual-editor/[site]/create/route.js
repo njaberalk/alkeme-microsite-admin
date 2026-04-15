@@ -17,7 +17,8 @@ export async function POST(request, { params }) {
     if (!typeConfig) return NextResponse.json({ error: `Unknown type: ${type}` }, { status: 400 });
 
     // Read current data file
-    const { content, sha } = await readFile(siteConfig.repo, typeConfig.file);
+    const branch = siteConfig.branch || 'master';
+    const { content, sha } = await readFile(siteConfig.repo, typeConfig.file, branch);
     const parsed = parseDataFile(content);
     const items = Array.isArray(parsed.data) ? parsed.data : [];
 
@@ -100,7 +101,7 @@ export async function POST(request, { params }) {
       typeConfig.file,
       newContent,
       sha,
-      `CMS: Create new ${type}/${slug}`,
+      `CMS: Create new ${type}/${slug}`, branch,
     );
 
     // Determine the route for navigation

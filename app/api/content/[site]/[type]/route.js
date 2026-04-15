@@ -13,7 +13,8 @@ export async function GET(request, { params }) {
       return NextResponse.json({ error: 'Invalid site or type' }, { status: 404 });
     }
 
-    const { content, sha } = await readFile(siteConfig.repo, typeConfig.file);
+    const branch = siteConfig.branch || 'master';
+    const { content, sha } = await readFile(siteConfig.repo, typeConfig.file, branch);
 
     let items;
     if (type === 'cross-links') {
